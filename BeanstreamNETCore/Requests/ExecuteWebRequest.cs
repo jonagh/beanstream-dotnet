@@ -28,6 +28,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Beanstream.Api.SDK.Data;
 using Beanstream.Api.SDK.Domain;
+using System.Threading.Tasks;
 
 namespace Beanstream.Api.SDK.Requests
 {
@@ -54,7 +55,7 @@ namespace Beanstream.Api.SDK.Requests
 
 			httpRequest.Method = _requestObject.Method.ToString().ToUpper();
 			if (_requestObject.Credentials != null) // we might use this for a no auth connection
-				httpRequest.Headers.Add("Authorization", GetAuthorizationHeaderString(_requestObject.Credentials));
+				httpRequest.Headers["Authorization"] = GetAuthorizationHeaderString(_requestObject.Credentials);
 			httpRequest.ContentType = "application/json";
 			//Console.WriteLine("auth: "+GetAuthorizationHeaderString(_requestObject.Credentials));
 			//Console.WriteLine ("URL: "+httpRequest.Method.ToUpper()+" "+Url);
@@ -68,7 +69,7 @@ namespace Beanstream.Api.SDK.Requests
 
 				//SConsole.WriteLine ("Request Data:\n"+data); // useful to examine output
 
-				using (var writer = new StreamWriter (request.GetRequestStream ())) {
+				using (var writer = new StreamWriter (GetRequestStreamAsync(request).Result)) {
 					writer.Write (data);
 				}
 			}
@@ -83,6 +84,11 @@ namespace Beanstream.Api.SDK.Requests
 			
 			return GetResponseBody(response);
 		}
+
+        private static async Task<Stream> GetRequestStreamAsync(WebRequest request)
+        {
+            return await request.GetRequestStreamAsync().ConfigureAwait(false);
+        }
 
 		private static string GetResponseBody(WebResponse response)
 		{

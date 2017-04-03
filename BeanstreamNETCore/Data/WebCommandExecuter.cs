@@ -23,7 +23,7 @@
 
 using System;
 using System.Net;
-
+using System.Threading.Tasks;
 
 namespace Beanstream.Api.SDK.Data
 {
@@ -46,7 +46,7 @@ namespace Beanstream.Api.SDK.Data
 
 			spec.PrepareRequest(request);
 
-			using(var response = request.GetResponse() as HttpWebResponse)
+            using (var response = GetResponseAsync(request).Result as HttpWebResponse)
 			{
 				if (response == null)
 				{
@@ -63,5 +63,10 @@ namespace Beanstream.Api.SDK.Data
 
 			return result;
 		}
-	}
+
+        private static async Task<WebResponse> GetResponseAsync(WebRequest request)
+        {
+            return await request.GetResponseAsync().ConfigureAwait(false);
+        }
+    }
 }

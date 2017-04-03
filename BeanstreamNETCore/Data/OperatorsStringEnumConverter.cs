@@ -37,7 +37,7 @@ namespace Beanstream
 		{
 			if (value is Operators)
 			{
-				FieldInfo fi = value.GetType().GetField(value.ToString());
+				FieldInfo fi = value.GetType().GetTypeInfo().GetField(value.ToString());
 
 				DescriptionAttribute[] attributes =
 					(DescriptionAttribute[])fi.GetCustomAttributes(
