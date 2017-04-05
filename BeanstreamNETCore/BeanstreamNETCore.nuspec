@@ -2,10 +2,10 @@
 <package >
   <metadata>
     <id>BeanstreamNETCore</id>
-    <version>1.0.1</version>
-    <title>Beanstream NETCore</title>
-    <authors>Beanstream + Jonagh</authors>
-    <owners>Open Source</owners>
+    <version>1.2.0</version>
+    <title>Beanstream</title>
+    <authors>Beanstream</authors>
+    <owners>Beanstream</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NETCore version of Beanstream lib.</description>
     <releaseNotes>Hack to make Beanstream lib work with NETCore.</releaseNotes>
